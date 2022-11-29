@@ -73,6 +73,12 @@ sub populate_tree {
     [qw( evidence EnsEMBL::Web::Component::Regulation::Evidence )],
     { 'availability' => 'regulation', 'concise' => 'Source data' }
   );
+
+    $self->create_node('Regsite', 'Regulation subsite',
+    [qw( buttons    EnsEMBL::Web::Component::Regulation::Buttons
+         cell_line EnsEMBL::Web::Component::Regulation::Regsite )],
+    { 'availability' => 'regulation', 'concise' => 'Regulation subsite' }
+  );
 }
 
 1;

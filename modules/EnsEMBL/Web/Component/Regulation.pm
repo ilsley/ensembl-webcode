@@ -160,6 +160,12 @@ sub nav_buttons {
       title => "Source Data",
       action => 'Evidence',
       text => "Source Data",
+    },
+    {
+      img => "navb-reg-details.png",
+      title => "Reg subsite",
+      action => 'Regsite',
+      text => "Regulation\nsubsite",
     }
   );
   foreach my $b (@buttons) {

@@ -75,8 +75,7 @@ sub populate_tree {
   );
 
     $self->create_node('Regsite', 'Regulation subsite',
-    [qw( buttons    EnsEMBL::Web::Component::Regulation::Buttons
-         cell_line EnsEMBL::Web::Component::Regulation::Regsite )],
+    [qw( regsite EnsEMBL::Web::Component::Regulation::Regsite )],
     { 'availability' => 'regulation', 'concise' => 'Regulation subsite' }
   );
 }

@@ -22,6 +22,10 @@ package EnsEMBL::Web::Component::Regulation::Regsite;
 use strict;
 use warnings;
 no warnings "uninitialized";
+
+use EnsEMBL::Draw::Utils::ColourMap;
+use EnsEMBL::Web::Utils::FormatText qw(helptip);
+
 use base qw(EnsEMBL::Web::Component::Regulation);
 
 
@@ -29,39 +33,25 @@ sub _init {
   my $self = shift;
   $self->cacheable(0);
   $self->ajaxable(1);
-  $self->has_image(1);
+  # $self->has_image(1);
 }
 
 sub content {
   my $self = shift;
-  my $object = $self->object || $self->hub->core_object('regulation');
+  my $object = $self->object || $self->hub->core_object('regulation'); 
+  my ($html, $Configs);
 
-  $self->cell_line_button('reg_summary');
+  my $context      = $self->param( 'context' ) || 200; 
+  my $object_slice = $object->get_bound_context_slice($context);
+     $object_slice = $object_slice->invert if $object_slice->strand < 1;
 
-  my $object_slice = $object->get_context_slice(25000);
-     $object_slice = $object_slice->invert if $object_slice->strand < 1; 
+  
+  $html .= '<h3>Summary of Regulatory Activity (for now)
+              <a title="Click to show or hide the table" rel="celltype_regfeature_table" href="#" class="toggle_link toggle new_icon open _slide_toggle">Hide</a>
+            </h3>';
 
-
-  my $fsets = $object->get_feature_sets;
-
-  my $wuc = $object->get_imageconfig( 'reg_summary' ); 
-  $wuc->cache( 'feature_sets', $fsets);
-
-  $wuc->set_parameters({
-    'container_width'   => $object_slice->length,
-    'image_width',      => $self->image_width || 800,
-    'slice_number',     => '1|1',
-  });
-
-  $wuc->{'data_by_cell_line'} = $self->new_object('Slice', $object_slice, $object->__data)->get_cell_line_data($wuc);
-
-  my $image    = $self->new_image( $object_slice, $wuc, [$object->stable_id] );
-      $image->imagemap           = 'yes';
-      $image->{'panel_number'} = 'top';
-      $image->set_button( 'drag', 'title' => 'Drag to select region' );
-  return if $self->_export_image( $image );
-
-  return $image->render;
+  
+  return $html;
 }
 
 1;

@@ -169,6 +169,19 @@ sub populate_tree {
     { 'availability' => 'slice has_LD', 'concise' => 'Linkage Disequilibrium Data' }
   ));
 
+  my $regulation_menu = $self->create_submenu( 'Regulation', 'Regulatory regions' );
+
+  $regulation_menu->append($self->create_node('Peaks', 'Primary analysis',
+    [qw(
+      summary   EnsEMBL::Web::Component::Location::Summary
+      nav       EnsEMBL::Web::Component::Location::ViewBottomNav/region
+      top       EnsEMBL::Web::Component::Location::Region
+      regregion EnsEMBL::Web::Component::Location::RegulationRegion
+      regparams EnsEMBL::Web::Component::Location::RegulationParams
+    )],
+    { 'availability' => 'slice' , 'concise' => 'Regulatory analysis' }
+  ));
+
   $self->create_node('Marker', 'Markers',
     [qw(
       summary EnsEMBL::Web::Component::Location::Summary
